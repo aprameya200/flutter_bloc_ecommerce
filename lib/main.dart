@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'features/home/ui/home.dart';
 
@@ -13,6 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle( //to set the color of entire screen and not miss the bottom bar
+      systemNavigationBarColor: Color(0xFFF1EBEB), // Set navigation bar color
+    ));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

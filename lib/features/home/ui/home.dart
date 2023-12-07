@@ -4,6 +4,7 @@ import 'package:bloc_e_commerce/services/product_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../cart/ui/cart.dart';
 
@@ -56,7 +57,9 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
           case HomeLoadedSuccessState:
             return Scaffold(
+              backgroundColor: Color(0xFFF1EBEB),
               appBar: AppBar(
+                backgroundColor: Color(0xFFF1EBEB),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Align(
@@ -101,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               body: Padding(
-                padding: const EdgeInsets.only(top: 40.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,13 +112,15 @@ class _HomePageState extends State<HomePage> {
                     Center(
                       child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: Color(0xFFB1454A),
                             borderRadius: BorderRadius.circular(
                                 20.0), // Set the border radius here
                           ),
                           height: 160,
-                          width: 350,
+                          width: double.infinity,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -123,18 +128,207 @@ class _HomePageState extends State<HomePage> {
                                   Padding(
                                       padding: EdgeInsets.all(12),
                                       child: Text(
-                                    "Get 32% Promo",
-                                    style: TextStyle(
-                                        fontSize: 26,
-                                        fontFamily: "PlayfairDisplay"),
-                                  )),
+                                        "Get 32% Promo",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "PlayfairDisplay"),
+                                      )),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text("Buy Now"))
+                                      style: ButtonStyle(
+                                          elevation:
+                                              MaterialStatePropertyAll(0),
+                                          backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  Colors.white38)),
+                                      onPressed: () {},
+                                      child: Text(
+                                        "Buy Food",
+                                        style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 15,
+                                            fontFamily: "LibreFranklin"),
+                                      ))
                                 ],
                               ),
+                              Container(
+                                  child: LottieBuilder.asset(
+                                "assets/sushi-offer.json",
+                                height: 200,
+                                width: 130,
+                              ))
                             ],
                           )),
                     ),
+                    SearchBar(
+                      textStyle: MaterialStatePropertyAll(TextStyle(
+                        fontSize: 17,
+                        fontFamily: "LibreFranklin",
+                      )),
+                      elevation: MaterialStatePropertyAll(0),
+                      shadowColor: MaterialStatePropertyAll(Colors.red),
+                      backgroundColor:
+                          MaterialStatePropertyAll(Color(0xFFF9F9F9)),
+                      hintText: "Search",
+                      leading: Icon(Icons.search),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: 140,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFF9F9F9),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.fastfood_rounded),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    "Sushi",
+                                    style: TextStyle(
+                                        fontFamily: "LibreFranklin",
+                                        color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: 140,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFF9F9F9),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.fastfood_rounded),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    "Sushi",
+                                    style: TextStyle(
+                                        fontFamily: "LibreFranklin",
+                                        color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: 140,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFF9F9F9),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.fastfood_rounded),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    "Sushi",
+                                    style: TextStyle(
+                                        fontFamily: "LibreFranklin",
+                                        color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: 140,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFF9F9F9),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.fastfood_rounded),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    "Sushi",
+                                    style: TextStyle(
+                                        fontFamily: "LibreFranklin",
+                                        color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              width: 160,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFF9F9F9),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.fastfood_rounded),
+                                  SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text(
+                                    "Sushi",
+                                    style: TextStyle(
+                                        fontFamily: "LibreFranklin",
+                                        color: Colors.red),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+
                   ],
                 ),
               ),
