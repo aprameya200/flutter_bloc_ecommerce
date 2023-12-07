@@ -11,7 +11,12 @@ class HomeInitial extends HomeState {}
 
 class HomeLoadingState extends HomeState{}
 
-class HomeLoadedSuccessState extends HomeState{}
+class HomeLoadedSuccessState extends HomeState{ //when home is loaded, then i need to see a list of products
+
+  final  List<ProductModel> products;
+
+  HomeLoadedSuccessState(this.products);
+}
 
 class HomeErrorState extends HomeState{}
 
