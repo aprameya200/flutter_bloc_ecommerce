@@ -1,4 +1,5 @@
 
+import 'package:bloc_e_commerce/features/item/ui/item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle( //to set the color of entire screen and not miss the bottom bar
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( //to set the color of entire screen and not miss the bottom bar
       systemNavigationBarColor: Color(0xFFF1EBEB), // Set navigation bar color
     ));
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const ItemPage(),
     );
   }
 }

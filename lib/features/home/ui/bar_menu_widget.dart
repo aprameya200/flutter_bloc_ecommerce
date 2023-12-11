@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BarMenu extends StatelessWidget {
-  const BarMenu({super.key,required this.categoryModel});
+  const BarMenu({super.key,required this.categoryModel, required this.backgroundColor});
 
   final CategoryModel categoryModel ;
+  final Color backgroundColor ;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class BarMenu extends StatelessWidget {
                 Text(
                   categoryModel.catagoryName,
                   style:
-                      TextStyle(fontFamily: "LibreFranklin", color: Colors.red),
+                      TextStyle(fontFamily: "LibreFranklin", color: backgroundColor),
                 )
               ],
             ),
