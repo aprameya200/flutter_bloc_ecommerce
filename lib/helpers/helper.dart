@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../models/product_model.dart';
 
 class Helper{
@@ -12,5 +14,11 @@ class Helper{
       return allProducts;
     }
 
+  }
+
+
+  static String utf8convert(String text) { //converts the emoji utf string to readable emoji
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

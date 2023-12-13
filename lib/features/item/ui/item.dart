@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bloc_e_commerce/helpers/helper.dart';
+import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,40 +9,40 @@ import '../../../models/category_model.dart';
 import '../../home/ui/bar_menu_widget.dart';
 
 class ItemPage extends StatefulWidget {
-  const ItemPage({super.key});
+  const ItemPage({super.key, required this.item});
+
+  final ProductModel item;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
 }
 
 class _ItemPageState extends State<ItemPage> {
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
-    List<CategoryModel> cat = [
-      CategoryModel("All", "assets/all.png"),
-      CategoryModel("Sushi", "assets/sushi.png"),
-      CategoryModel("Ramen", "assets/ramen.png"),
-      CategoryModel("Chicken", "assets/chicken-leg.png"),
-    ];
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Color(0xFFB1454A), // Set the color you want
-    ));
+    ProductModel item = widget.item;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF1EBEB),
       appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFFB1454A),
+          statusBarColor: Color(0xFFF1EBEB), // Set the color you want
+    // Set the color you want
+        ),
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF1EBEB),
-        title: const Padding(
+        title:  Padding(
           padding: EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.arrow_back,
-                size: 35,
+              IconButton(icon: Icon(Icons.arrow_back,
+                size: 35,),onPressed: () {Navigator.pop(context);},
+
               ),
               Icon(
                 Icons.favorite_border_sharp,
@@ -50,88 +52,97 @@ class _ItemPageState extends State<ItemPage> {
           ),
         ),
       ),
-      body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 22),
-          height: screenHeight * 0.8,
-          width: double.infinity,
-          color: Color(0xFFF1EBEB),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                  child: Image.asset("assets/sushi.png",
-                      height: screenHeight * 0.29)),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.star,
-                    color: Color(0xffe18414),
+      body: SingleChildScrollView(
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 22),
+            height: screenHeight * 1,
+            width: double.infinity,
+            color: Color(0xFFF1EBEB),
+            child: Column(
+              children: [
+                Container(
+                  height: screenHeight * 0.83,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                          child: Image.asset("assets/sushi.png",
+                              height: screenHeight * 0.29)),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffe18414),
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            "4.8",
+                            style: TextStyle(color: Colors.black, fontSize: 19),
+                          )
+                        ],
+                      ),
+                      AutoSizeText(
+                        item.name.toString(),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontFamily: "PlayfairDisplay",
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "Ingredients",
+                        style: TextStyle(
+                            fontSize: 23,
+                            fontFamily: "LibreFranklin",
+                            fontWeight: FontWeight.w300),
+                      ),
+                      Container(
+                        height: screenHeight * 0.056,
+                        child: ListView.builder(
+                            itemCount: item.ingredients!.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                child: BarMenu(
+                                  categoryModel: CategoryModel(Helper.utf8convert(item.ingredients![index]),""),
+                                  backgroundColor: Colors.black,
+                                ),
+                              );
+                            }),
+                      ),
+                      const Text(
+                        "Description",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "LibreFranklin",
+                            fontWeight: FontWeight.w300),
+                      ),
+                      AutoSizeText(
+                        item.description.toString(),
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "LibreFranklin",
+                            fontWeight: FontWeight.w400),
+                        textAlign: TextAlign.justify,
+                        maxLines: 7,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: 3,
-                  ),
-                  Text(
-                    "4.8",
-                    style: TextStyle(color: Colors.black, fontSize: 19),
-                  )
-                ],
-              ),
-              AutoSizeText(
-                "Original Sushi",
-                maxLines: 2,
-                style: TextStyle(
-                    fontSize: 36,
-                    fontFamily: "PlayfairDisplay",
-                    fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "Ingredients",
-                style: TextStyle(
-                    fontSize: 23,
-                    fontFamily: "LibreFranklin",
-                    fontWeight: FontWeight.w300),
-              ),
-              Container(
-                height: screenHeight * 0.056,
-                child: ListView.builder(
-                    itemCount: cat.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        child: BarMenu(
-                          categoryModel: cat[index],
-                          backgroundColor: Colors.black,
-                        ),
-                      );
-                    }),
-              ),
-              const Text(
-                "Description",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "LibreFranklin",
-                    fontWeight: FontWeight.w300),
-              ),
-              const AutoSizeText(
-                "Indulge in the rich and hearty flavors of Miso Ramen. This ramen variety boasts a broth made with fermented soybean paste, creating a robust and complex taste. Served with chewy ramen noodles, fresh bean sprouts, corn, and slices of succulent chashu pork, it's a satisfying bowl of comfort",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: "LibreFranklin",
-                    fontWeight: FontWeight.w400),
-                textAlign: TextAlign.justify,
-                maxLines: 7,
-              ),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          )),
+                ),
+              ],
+            )),
+      ),
       bottomSheet: Container(
-        height: screenHeight * 0.12,
+        height: screenHeight * 0.15,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFFB1454A), // Background color
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24),
@@ -139,25 +150,34 @@ class _ItemPageState extends State<ItemPage> {
           ), // Border radius
         ),
         child: Container(
-            child: const Column(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "\$42.33",
-                  style: TextStyle(
+                  "\$" + item.price.toString(),
+                  style: const TextStyle(
                       color: Colors.white,
                       fontFamily: "LibreFranklin",
-                      fontSize: 18,
+                      fontSize: 25,
                       letterSpacing: 2),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(50),
+                                    bottomLeft: Radius.circular(50),
+                                    bottomRight: Radius.circular(50),
+                                    topRight: Radius.circular(50)))),
                         onPressed: null,
-                        child: Text(
+                        child: const Text(
                           "-",
                           style: TextStyle(fontSize: 30, color: Colors.white),
                         )),
@@ -169,17 +189,52 @@ class _ItemPageState extends State<ItemPage> {
                     SizedBox(
                       width: 15,
                     ),
-                    ElevatedButton(
-                        onPressed: null,
-                        child: Text(
-                          "+",
-                          style: TextStyle(fontSize: 30, color: Colors.white),
-                        )),
+                    Container(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(150),
+                                      bottomLeft: Radius.circular(150),
+                                      bottomRight: Radius.circular(150),
+                                      topRight: Radius.circular(150)))),
+                          onPressed: () {print("Q");},
+                          child: Text(
+                            "+",
+                            style: TextStyle(fontSize: 23, color: Colors.white),
+                          )),
+                    ),
                   ],
                 )
               ],
             ),
-            ElevatedButton(onPressed: null, child: Row(children: [Text("Buy Now"),Icon(Icons.arrow_forward)],))
+            Container(
+              width: screenWidth * 0.7,
+              height: screenHeight * 0.06,
+              child: const ElevatedButton(
+                  onPressed: null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Add To Cart",
+                        style: TextStyle(
+                            fontSize: 20,
+                            letterSpacing: 2,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w100,
+                            fontFamily: "LibreFranklin"),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        color: Colors.white,
+                      )
+                    ],
+                  )),
+            )
           ],
         )),
       ),

@@ -4,12 +4,14 @@ import 'package:bloc_e_commerce/features/home/ui/banner_widget.dart';
 import 'package:bloc_e_commerce/features/home/ui/popular_foods_widget.dart';
 import 'package:bloc_e_commerce/features/home/ui/search_bar_widget.dart';
 import 'package:bloc_e_commerce/features/home/ui/tile_menu_widget.dart';
+import 'package:bloc_e_commerce/features/item/ui/item.dart';
 import 'package:bloc_e_commerce/features/wishlist/ui/wishlist.dart';
 import 'package:bloc_e_commerce/models/category_model.dart';
 import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:bloc_e_commerce/services/product_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
@@ -46,10 +48,10 @@ class _HomePageState extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     List<CategoryModel> cat = [
-      CategoryModel("All", "assets/all.png"),
-      CategoryModel("Sushi", "assets/sushi.png"),
-      CategoryModel("Ramen", "assets/ramen.png"),
-      CategoryModel("Chicken", "assets/chicken-leg.png"),
+      CategoryModel("All", "🍲"),
+      CategoryModel("Sushi", "🐟"),
+      CategoryModel("Ramen", "🍜"),
+      CategoryModel("Chicken", "🍗"),
     ];
 
     return BlocConsumer<HomeBloc, HomeState>(
@@ -62,24 +64,41 @@ class _HomePageState extends State<HomePage> {
       listener: (context, state) {
         if (state is HomeNavigateToCartPageActionState) {
           //checks the data type of the obj
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const CartPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const CartPage()));
+          homebloc.add(HomeInitialEvent());
+
         } else if (state is HomeNavigateToWishlistPageActionState) {
           //checks the data type of the obj
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WishlistPage()));
+
+          homebloc.add(HomeInitialEvent());
+
+        } else if (state is HomeNavigateToProductPageActionState) {
+          //checks the data type of the o`bj
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const WishlistPage()));
+              context, MaterialPageRoute(builder: (context) => state.item));
+
+          homebloc.add(HomeInitialEvent());
         }
       },
       builder: (context, state) {
         switch (state.runtimeType) {
           case HomeLoadingState:
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
-          case HomeLoadedSuccessState :
+            return const Scaffold(
+                body: Center(child: CircularProgressIndicator()));
+          case HomeLoadedSuccessState:
             final successState = state as HomeLoadedSuccessState;
             return Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: const Color(0xFFF1EBEB),
               appBar: AppBar(
+                systemOverlayStyle: const SystemUiOverlayStyle(
+                  systemNavigationBarColor: Color(0xFFF1EBEB),
+                  statusBarColor: Color(0xFFF1EBEB), // Set the color you want
+// Set the color you want
+                ),
                 backgroundColor: const Color(0xFFF1EBEB),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
@@ -90,30 +109,30 @@ class _HomePageState extends State<HomePage> {
                           IconButton(
                             icon: const Icon(
                               Icons.add_shopping_cart,
-                              size: 25,
+                              size: 35,
                             ),
                             onPressed: () {
                               homebloc.add(HomeCartButtonNavigateEvent());
                             },
                           ),
-                          const Row(
+                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_location_outlined),
+                              Icon(Icons.add_location_outlined,size: 35,),
                               SizedBox(
                                 width: 10,
                               ),
                               Text(
                                 "Tokyo",
                                 style: TextStyle(
-                                    fontSize: 24, fontFamily: "LibreFranklin"),
+                                    fontSize: 26, fontFamily: "LibreFranklin"),
                               ),
                             ],
                           ),
                           IconButton(
                             icon: const Icon(
                               Icons.favorite,
-                              size: 25,
+                              size: 35,
                             ),
                             onPressed: () {
                               homebloc.add(HomeWishlistButtonNavigateEvent());
@@ -141,14 +160,20 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              homebloc.add(HomePressFilterButtonEvent(filterTerm: cat[index].catagoryName));
-                              setState(() { //simply done using state
+                              print(cat[index].catagoryName.toString());
+
+                              homebloc.add(HomePressFilterButtonEvent(
+                                  filterTerm: cat[index].catagoryName));
+                              setState(() {
+                                //simply done using state
                                 seclectionColor = index;
                               });
                             },
                             child: BarMenu(
-                              categoryModel: cat[index], backgroundColor: seclectionColor == index ? Colors.red : Colors.black
-                            ),
+                                categoryModel: cat[index],
+                                backgroundColor: seclectionColor == index
+                                    ? Colors.red
+                                    : Colors.black),
                           );
                         }),
                   ),
@@ -162,10 +187,18 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: successState.products.length,
                       itemBuilder: (context, index) {
-                        return TileMenu(
-                          productModel: successState.products[index],
-                          screenWidth: screenWidth,
-                          screenHeight: screenHeight,
+                        return GestureDetector(
+                          onTap: () {
+                            homebloc.add(HomeProductNavigateEvent(ItemPage(
+                              item: successState.products[index],
+                            )));
+                          },
+                          child: TileMenu(
+                            productModel: successState.products[index],
+                            screenWidth: screenWidth,
+                            screenHeight: screenHeight,
+                            homebloc: homebloc,
+                          ),
                         );
                       },
                     ),
@@ -186,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                   /**
                    * Egg
                    */
-                  PopularFoodsWidget(screenWidth: screenHeight)
+                  PopularFoodsWidget(screenHeight: screenHeight)
                 ],
               ),
             );

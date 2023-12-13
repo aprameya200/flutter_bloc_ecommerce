@@ -7,7 +7,11 @@ abstract class HomeEvent {}
 
 class HomeInitialEvent extends HomeEvent {}
 
-class HomeProductAddToWishlistButtonClickedEvent extends HomeEvent {}
+class HomeProductAddToWishlistButtonClickedEvent extends HomeEvent {
+  final ProductModel clickedProduct;
+
+  HomeProductAddToWishlistButtonClickedEvent(this.clickedProduct);
+}
 
 class HomeProductAddToCartClickedEvent extends HomeEvent {}
 
@@ -22,3 +26,13 @@ class HomePressFilterButtonEvent extends HomeEvent {
 class HomeWishlistButtonNavigateEvent extends HomeEvent {}
 
 class HomeCartButtonNavigateEvent extends HomeEvent {}
+
+
+class HomeProductNavigateEvent extends HomeEvent{
+
+  final ItemPage itemPage;
+
+  HomeProductNavigateEvent(this.itemPage);
+}
+
+class HomeNavigateBackEvent extends HomeEvent{}

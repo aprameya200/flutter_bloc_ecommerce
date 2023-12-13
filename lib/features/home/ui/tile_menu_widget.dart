@@ -5,27 +5,65 @@ import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TileMenu extends StatelessWidget {
+import '../../../data/wishlist_items.dart';
+
+import '../bloc/home_bloc.dart';
+
+class TileMenu extends StatefulWidget {
   const TileMenu(
       {super.key,
       required this.productModel,
       required this.screenWidth,
-      required this.screenHeight});
+      required this.screenHeight,
+      required this.homebloc});
 
   final ProductModel productModel;
   final double screenWidth;
   final double screenHeight;
+  final HomeBloc homebloc;
 
   @override
+  State<TileMenu> createState() => _TileMenuState();
+}
+
+class _TileMenuState extends State<TileMenu> {
+  @override
   Widget build(BuildContext context) {
+    Color isInWishlist = Colors.black;
+    Icon icon = Icon(Icons.favorite_border_sharp,color: isInWishlist,size: 30,);
+
+    for (int i = 0; i < WishlistItems.instance.wishlistItems.length; i++) {
+
+      print(WishlistItems.instance.wishlistItems[i].name.toString() + " from loop");
+
+      if (WishlistItems.instance.wishlistItems[i].name ==
+          widget.productModel.name) {
+
+        print("Yes Print");
+        isInWishlist = Colors.red;
+        icon = Icon(Icons.favorite,color: isInWishlist, size: 30,);
+
+      }else{
+      }
+    }
+
+    // Color isInWishlist = WishlistItems.instance.wishlistItems.contains(widget.productModel) ? Colors.red : Colors.black;
+
+    // print(WishlistItems.instance.wishlistItems
+    //         .contains(widget.productModel)
+    //         .toString() +
+    //     " Does contain");
+    //
+    // print(WishlistItems.instance.wishlistItems);
+
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0),
           //padding of entire card
           child: Container(
-            width: screenWidth * 0.48,
-            height: screenHeight * 0.25,
+            width: widget.screenWidth * 0.48,
+            height: widget.screenHeight * 0.25,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Color(0xFFF9F9F9),
@@ -42,22 +80,28 @@ class TileMenu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(
-                        getImage(productModel.category.toString()),
-                        height: 110,
+                        getImage(widget.productModel.category.toString()),
+                        height: widget.screenHeight * 0.12,
                         width: 115,
                       ),
-                      const Icon(
-                        Icons.favorite_border_sharp,
-                        size: 30,
-                        color: Color(0x56111111),
+                      InkWell(
+                        child: icon,
+                        onTap: () {
+                          widget.homebloc.add(
+                              HomeProductAddToWishlistButtonClickedEvent(
+                                  widget.productModel));
+                          setState(() {
+                            isInWishlist = Colors.red;
+                          });
+                        },
                       )
                     ],
                   ),
                   AutoSizeText(
-                    productModel.name.toString(),
+                    widget.productModel.name.toString(),
                     maxLines: 2,
                     style: TextStyle(
-                        fontSize: screenHeight * 0.018,
+                        fontSize: widget.screenHeight * 0.018,
                         fontFamily: "PlayfairDisplay",
                         fontWeight: FontWeight.w500),
                   ),
@@ -65,7 +109,7 @@ class TileMenu extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("\$${productModel.price}",
+                      Text("\$${widget.productModel.price}",
                           style: const TextStyle(
                               fontSize: 15,
                               fontFamily: "LibreFranklin",
@@ -96,8 +140,8 @@ class TileMenu extends StatelessWidget {
         ));
   }
 
-  String getImage(String cat){
-    switch(cat){
+  String getImage(String cat) {
+    switch (cat) {
       case "sushi":
         return "assets/${randomizer(cat)}.png";
       case "ramen":
@@ -109,23 +153,28 @@ class TileMenu extends StatelessWidget {
     }
   }
 
-  String randomizer(String name){
-    List namesSushi = ["sushi","egg","yellow-sushi","two-sushi","more_eggs","black-ramen"];
-    List namesRamen = ["ramen","black-ramen","egg-ramen"];
+  String randomizer(String name) {
+    List namesSushi = [
+      "sushi",
+      "egg",
+      "yellow-sushi",
+      "two-sushi",
+      "more_eggs",
+      "black-ramen"
+    ];
+    List namesRamen = ["ramen", "black-ramen", "egg-ramen"];
 
     final random = Random();
 
-    if(name == "sushi"){
+    if (name == "sushi") {
       final randomIndex = random.nextInt(namesSushi.length);
       return namesSushi[randomIndex];
-    }else if(name == "ramen"){
+    } else if (name == "ramen") {
       final randomIndex = random.nextInt(namesRamen.length);
       return namesRamen[randomIndex];
-    }else{
+    } else {
       final randomIndex = random.nextInt(namesRamen.length);
       return namesRamen[randomIndex];
     }
-
   }
 }
-

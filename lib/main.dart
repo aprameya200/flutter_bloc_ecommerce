@@ -16,10 +16,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( //to set the color of entire screen and not miss the bottom bar
-      systemNavigationBarColor: Color(0xFFF1EBEB), // Set navigation bar color
-    ));
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -27,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ItemPage(),
+      home: const HomePage(),
     );
   }
 }

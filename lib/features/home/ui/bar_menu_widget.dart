@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:bloc_e_commerce/models/category_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 
 class BarMenu extends StatelessWidget {
-  const BarMenu({super.key,required this.categoryModel, required this.backgroundColor});
+  const BarMenu(
+      {super.key, required this.categoryModel, required this.backgroundColor});
 
-  final CategoryModel categoryModel ;
-  final Color backgroundColor ;
+  final CategoryModel categoryModel;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7.0),
       child: SingleChildScrollView(
@@ -25,18 +30,13 @@ class BarMenu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  categoryModel.imageSource,
-                  width: 35,
-                  height: 35,
-                ),
+                Text(categoryModel.imageSource,style: TextStyle(fontSize: 26),),
                 SizedBox(
                   width: 7,
                 ),
                 Text(
                   categoryModel.catagoryName,
-                  style:
-                      TextStyle(fontFamily: "LibreFranklin", color: backgroundColor),
+                  style: TextStyle(fontSize: 16,color: backgroundColor),
                 )
               ],
             ),

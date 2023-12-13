@@ -1,5 +1,9 @@
+import 'package:bloc_e_commerce/features/home/ui/popular_foods_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../data/wishlist_items.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({super.key});
@@ -11,10 +15,49 @@ class WishlistPage extends StatefulWidget {
 class _WishlistPageState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
+
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFFB1454A),
+          statusBarColor: Color(0xFFF1EBEB), // Set the color you want
+          // Set the color you want
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFFF1EBEB),
+        title: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Text(
+                "Wishlist",
+                style: TextStyle(fontSize: 26, fontFamily: "LibreFranklin"),
+              ),
+              Text("        ") //adjust this
+            ],
+          ),
+        ),
+      ),
       body: Center(
         child: Container(
-          child: Text("Wishlist",style: TextStyle(fontSize: 50),),
+          color: Color(0xFFF1EBEB),
+          child: ListView.builder(
+              itemCount: WishlistItems.instance.wishlistItems.length,
+              itemBuilder: (context, index) {
+                return PopularFoodsWidget(screenHeight: screenHeight);
+              }),
         ),
       ),
     );

@@ -27,3 +27,12 @@ class HomeNavigateToCartPageActionState extends HomeActionsState{}
 
 class HomeFilterProductActionState extends HomeActionsState{
 }
+
+class HomeNavigateToProductPageActionState extends HomeActionsState{
+
+  ItemPage item;
+
+  HomeNavigateToProductPageActionState(this.item);
+}
+
+class HomeNavigateBackActionState extends HomeActionsState{}

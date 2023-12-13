@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PopularFoodsWidget extends StatelessWidget {
-  const PopularFoodsWidget({super.key, required this.screenWidth});
+  const PopularFoodsWidget({super.key, required this.screenHeight});
 
-  final double screenWidth;
+  final double screenHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class PopularFoodsWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         width: double.infinity,
-        height: screenWidth * 0.16,
+        height: screenHeight * 0.16,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Color(0xFFF9F9F9),
