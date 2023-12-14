@@ -33,28 +33,14 @@ class _TileMenuState extends State<TileMenu> {
     Icon icon = Icon(Icons.favorite_border_sharp,color: isInWishlist,size: 30,);
 
     for (int i = 0; i < WishlistItems.instance.wishlistItems.length; i++) {
-
-      print(WishlistItems.instance.wishlistItems[i].name.toString() + " from loop");
-
       if (WishlistItems.instance.wishlistItems[i].name ==
           widget.productModel.name) {
-
-        print("Yes Print");
         isInWishlist = Colors.red;
         icon = Icon(Icons.favorite,color: isInWishlist, size: 30,);
 
       }else{
       }
     }
-
-    // Color isInWishlist = WishlistItems.instance.wishlistItems.contains(widget.productModel) ? Colors.red : Colors.black;
-
-    // print(WishlistItems.instance.wishlistItems
-    //         .contains(widget.productModel)
-    //         .toString() +
-    //     " Does contain");
-    //
-    // print(WishlistItems.instance.wishlistItems);
 
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

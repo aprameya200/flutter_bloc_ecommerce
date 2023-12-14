@@ -1,4 +1,5 @@
 import 'package:bloc_e_commerce/features/home/ui/popular_foods_widget.dart';
+import 'package:bloc_e_commerce/features/wishlist/ui/display_wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,7 +57,10 @@ class _WishlistPageState extends State<WishlistPage> {
           child: ListView.builder(
               itemCount: WishlistItems.instance.wishlistItems.length,
               itemBuilder: (context, index) {
-                return PopularFoodsWidget(screenHeight: screenHeight);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: DisplayWishlistWidget(screenHeight: screenHeight, product: WishlistItems.instance.wishlistItems[index],),
+                );
               }),
         ),
       ),
