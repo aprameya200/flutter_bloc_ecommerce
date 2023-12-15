@@ -48,7 +48,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            "\$$amount",
+            "\$${amount.toStringAsFixed(2)}",
             style: const TextStyle(
                 color: Colors.white,
                 fontFamily: "LibreFranklin",
@@ -67,7 +67,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                   },
                   child: const Text(
                     "-",
-                    style: TextStyle(fontSize: 30, color: Colors.white),
+                    style: TextStyle(fontSize: 23, color: Colors.white),
                   )),
               const SizedBox(
                 width: 15,
@@ -93,9 +93,15 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       SizedBox(
         width: widget.screenWidth * 0.7,
         height: widget.screenHeight * 0.06,
-        child: const ElevatedButton(
-            onPressed: null,
-            child: Row(
+        child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xff8f3337),
+                foregroundColor: Colors.white,
+              ),
+            onPressed: () {
+              widget.itembloc.add(ItemAddToCartButtonClickedEvent(widget.item));
+            },
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(

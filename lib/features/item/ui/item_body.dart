@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bloc_e_commerce/data/constants.dart';
 import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,8 @@ class _ItemBodyState extends State<ItemBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: Image.asset("assets/sushi.png",
+                        child: Image.network(
+                            imageLinkStart + widget.item.imageName.toString(),
                             height: widget.screenHeight * 0.29)),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,

@@ -9,14 +9,18 @@ import 'package:bloc_e_commerce/features/wishlist/ui/wishlist.dart';
 import 'package:bloc_e_commerce/models/category_model.dart';
 import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:bloc_e_commerce/services/product_service.dart';
+import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../cart/ui/cart.dart';
 import 'bar_menu_widget.dart';
+
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -64,23 +68,37 @@ class _HomePageState extends State<HomePage> {
       listener: (context, state) {
         if (state is HomeNavigateToCartPageActionState) {
           //checks the data type of the obj
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const CartPage()));
-          homebloc.add(HomeInitialEvent());
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.leftToRight, child: CartPage()));
 
+          homebloc.add(HomeAlreadyLoadedEvent());
         } else if (state is HomeNavigateToWishlistPageActionState) {
           //checks the data type of the obj
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const WishlistPage()));
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const WishlistPage()));
 
-          homebloc.add(HomeInitialEvent());
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.rightToLeft, child: WishlistPage()));
 
+          homebloc.add(HomeAlreadyLoadedEvent());
         } else if (state is HomeNavigateToProductPageActionState) {
           //checks the data type of the o`bj
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => state.item));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => state.item));
 
-          homebloc.add(HomeInitialEvent());
+          Navigator.push(
+              context,
+              PageTransition(
+                  duration: Duration(milliseconds: 300),
+                  type: PageTransitionType.bottomToTop,
+                  childCurrent: HomePage(),
+                  child: state.item));
+
+          homebloc.add(HomeAlreadyLoadedEvent());
         }
       },
       builder: (context, state) {
@@ -108,17 +126,20 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           IconButton(
                             icon: const Icon(
-                              Icons.add_shopping_cart,
+                              CarbonIcons.shopping_cart,
                               size: 35,
                             ),
                             onPressed: () {
                               homebloc.add(HomeCartButtonNavigateEvent());
                             },
                           ),
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_location_outlined,size: 35,),
+                              Icon(
+                                CarbonIcons.location,
+                                size: 35,
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -131,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           IconButton(
                             icon: const Icon(
-                              Icons.favorite,
+                              CarbonIcons.favorite,
                               size: 35,
                             ),
                             onPressed: () {
@@ -148,9 +169,6 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   BannerWidget(screenHeight: screenHeight),
                   const SearchBarWidget(),
-                  /**
-                   * Small menu
-                   */
                   Container(
                     padding: const EdgeInsets.only(left: 26.0),
                     height: screenHeight * 0.056,
@@ -164,6 +182,7 @@ class _HomePageState extends State<HomePage> {
 
                               homebloc.add(HomePressFilterButtonEvent(
                                   filterTerm: cat[index].catagoryName));
+
                               setState(() {
                                 //simply done using state
                                 seclectionColor = index;

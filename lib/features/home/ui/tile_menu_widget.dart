@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bloc_e_commerce/data/constants.dart';
 import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,8 +66,8 @@ class _TileMenuState extends State<TileMenu> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        getImage(widget.productModel.category.toString()),
+                      Image.network(
+                        imageLinkStart + widget.productModel.imageName.toString(),
                         height: widget.screenHeight * 0.12,
                         width: 115,
                       ),
@@ -87,7 +88,7 @@ class _TileMenuState extends State<TileMenu> {
                     widget.productModel.name.toString(),
                     maxLines: 2,
                     style: TextStyle(
-                        fontSize: widget.screenHeight * 0.018,
+                        fontSize: widget.screenHeight * 0.023,
                         fontFamily: "PlayfairDisplay",
                         fontWeight: FontWeight.w500),
                   ),
@@ -126,41 +127,4 @@ class _TileMenuState extends State<TileMenu> {
         ));
   }
 
-  String getImage(String cat) {
-    switch (cat) {
-      case "sushi":
-        return "assets/${randomizer(cat)}.png";
-      case "ramen":
-        return "assets/${randomizer(cat)}.png";
-      case "chicken":
-        return "assets/chicken-leg.png";
-      default:
-        return "assets/sushi.png";
-    }
-  }
-
-  String randomizer(String name) {
-    List namesSushi = [
-      "sushi",
-      "egg",
-      "yellow-sushi",
-      "two-sushi",
-      "more_eggs",
-      "black-ramen"
-    ];
-    List namesRamen = ["ramen", "black-ramen", "egg-ramen"];
-
-    final random = Random();
-
-    if (name == "sushi") {
-      final randomIndex = random.nextInt(namesSushi.length);
-      return namesSushi[randomIndex];
-    } else if (name == "ramen") {
-      final randomIndex = random.nextInt(namesRamen.length);
-      return namesRamen[randomIndex];
-    } else {
-      final randomIndex = random.nextInt(namesRamen.length);
-      return namesRamen[randomIndex];
-    }
-  }
 }

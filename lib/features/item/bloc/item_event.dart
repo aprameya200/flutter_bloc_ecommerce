@@ -8,18 +8,19 @@ class ItemInitialEvent extends ItemEvent{}
 class ItemProductAddToWishlistButtonClickedEvent extends ItemEvent{}
 
 class ItemAddQuantityButtonClickedEvent extends ItemEvent{
-  int quantity = 1;
-
 
 }
 
 class ItemSubtractQuantityButtonClickedEvent extends ItemEvent{
 
-  int quantity = -1;
-
 }
 
-class ItemAddToCartButtonClickedEvent extends ItemEvent{}
+class ItemAddToCartButtonClickedEvent extends ItemEvent{
+
+  final ProductModel product;
+
+  ItemAddToCartButtonClickedEvent(this.product);
+}
 
 
 

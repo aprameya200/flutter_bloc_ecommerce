@@ -3,15 +3,22 @@ import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DisplayWishlistWidget extends StatelessWidget {
-  const DisplayWishlistWidget(
-      {super.key, required this.screenHeight, required this.product});
+class DisplayCart extends StatelessWidget {
+  const DisplayCart(
+      {super.key,
+      required this.screenHeight,
+      required this.product,
+      required this.quantity});
 
   final double screenHeight;
   final ProductModel product;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
+
+    double totalAmount = product.price! * quantity.toDouble();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -25,6 +32,7 @@ class DisplayWishlistWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.center ,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
                 flex: 2,
@@ -49,41 +57,39 @@ class DisplayWishlistWidget extends StatelessWidget {
                             fontFamily: "PlayfairDisplay",
                             fontWeight: FontWeight.w500),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "\$" + product.price.toString(),
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: "LibreFranklin",
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Color(0xFFFFA600),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "5.0",
-                                style: TextStyle(
-                                    color: Color(0x56111111),
-                                    fontSize: 14,
-                                    fontFamily: "LibreFranklin",
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          )
-                        ],
+                      Text(
+                        "\$$totalAmount",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: "LibreFranklin",
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
                 ),
               ),
+              Flexible(
+                  flex: 1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "x",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "LibreFranklin",
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        " " + quantity.toString(),
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: "PlayfairDisplay",
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ))
             ],
           ),
         ),

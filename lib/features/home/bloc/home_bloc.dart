@@ -29,9 +29,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         homePressFilterButtonEvent); //for x event pass y state
 
     on<HomeProductNavigateEvent>(homeProductClickedEvent);
+    on<HomeAlreadyLoadedEvent>(homeAlreadyLoadedEvent);
   }
 
 
+  FutureOr<void> homeAlreadyLoadedEvent(
+      HomeAlreadyLoadedEvent event, Emitter<HomeState> emit) async{
+
+
+    //getting data from API
+    final dataService = ProductService();
+    List<ProductModel> products = await dataService.getDataFromService();
+    List<ProductModel> originalProductList = products;
+
+    List<ProductModel> filteredProducts =
+    Helper.filterProducts("All", products);
+
+    //emmiting the retrieved data
+    emit(HomeLoadedSuccessState(filteredProducts, originalProductList));
+  }
 
 
   FutureOr<void> homeProductClickedEvent(
@@ -92,8 +108,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Emitter<HomeState> emit) {
 
     WishlistItems.instance.wishlistItems.add(event.clickedProduct);
-    print("added to wishlist");
-    print(event.clickedProduct.name.toString() + " added to wishlist");
+
   }
 
   FutureOr<void> homeProductAddToCartClickedEvent(

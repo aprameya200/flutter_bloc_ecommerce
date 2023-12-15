@@ -36,3 +36,5 @@ class HomeProductNavigateEvent extends HomeEvent{
 }
 
 class HomeNavigateBackEvent extends HomeEvent{}
+
+class HomeAlreadyLoadedEvent extends HomeEvent{}

@@ -18,7 +18,12 @@ class Helper{
 
 
   static String utf8convert(String text) { //converts the emoji utf string to readable emoji
-    List<int> bytes = text.toString().codeUnits;
-    return utf8.decode(bytes);
+    try{
+      List<int> bytes = text.toString().codeUnits;
+      return utf8.decode(bytes);
+    }on Exception catch (e) {
+      return text;
+    }
+
   }
 }

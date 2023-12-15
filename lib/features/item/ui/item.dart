@@ -32,6 +32,12 @@ class _ItemPageState extends State<ItemPage> {
   void initState() {
     super.initState();
     itemBloc.add(ItemInitialEvent());
+    // Future.delayed(Duration(milliseconds: 100), () {
+    //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //     systemNavigationBarColor: colorRed,
+    //     statusBarColor: colorBakgroundWhite,
+    //   ));
+    // });
   }
 
   @override
@@ -67,7 +73,7 @@ class _ItemPageState extends State<ItemPage> {
                 // Set the color you want
               ),
               automaticallyImplyLeading: false,
-              backgroundColor: const Color(0xFFF1EBEB),
+              backgroundColor: colorBakgroundWhite,
               title: const ItemAppBar(),
             ),
             body: ItemBody(
@@ -83,7 +89,7 @@ class _ItemPageState extends State<ItemPage> {
             ),
           );
         } else {
-          return const Text("Null");
+          return const Scaffold(body: Text("Null"));
         }
       },
     );

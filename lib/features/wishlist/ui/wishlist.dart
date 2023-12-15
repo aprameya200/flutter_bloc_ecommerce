@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../data/constants.dart';
 import '../../../data/wishlist_items.dart';
 
 class WishlistPage extends StatefulWidget {
@@ -22,9 +23,8 @@ class _WishlistPageState extends State<WishlistPage> {
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle(
-          systemNavigationBarColor: Color(0xFFB1454A),
-          statusBarColor: Color(0xFFF1EBEB), // Set the color you want
-          // Set the color you want
+          systemNavigationBarColor: colorBakgroundWhite,
+          statusBarColor: colorBakgroundWhite,
         ),
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFF1EBEB),
