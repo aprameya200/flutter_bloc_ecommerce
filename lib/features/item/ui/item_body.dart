@@ -36,9 +36,12 @@ class _ItemBodyState extends State<ItemBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: Image.network(
-                            imageLinkStart + widget.item.imageName.toString(),
-                            height: widget.screenHeight * 0.29)),
+                        child: Hero(
+                          tag: imageLinkStart + widget.item.imageName.toString(),
+                          child: Image.network(
+                              imageLinkStart + widget.item.imageName.toString(),
+                              height: widget.screenHeight * 0.29),
+                        )),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [

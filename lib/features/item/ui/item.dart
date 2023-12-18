@@ -5,7 +5,7 @@ import 'package:bloc_e_commerce/features/item/ui/button_widget.dart';
 import 'package:bloc_e_commerce/features/item/ui/item_app_bar.dart';
 import 'package:bloc_e_commerce/features/item/ui/item_body.dart';
 import 'package:bloc_e_commerce/helpers/helper.dart';
-import 'package:bloc_e_commerce/helpers/item_state_helper.dart';
+import 'package:bloc_e_commerce/helpers/state_helper.dart';
 import 'package:bloc_e_commerce/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +32,6 @@ class _ItemPageState extends State<ItemPage> {
   void initState() {
     super.initState();
     itemBloc.add(ItemInitialEvent());
-    // Future.delayed(Duration(milliseconds: 100), () {
-    //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //     systemNavigationBarColor: colorRed,
-    //     statusBarColor: colorBakgroundWhite,
-    //   ));
-    // });
   }
 
   @override
@@ -54,17 +48,18 @@ class _ItemPageState extends State<ItemPage> {
       listener: (context, state) {},
       builder: (context, state) {
         if (ItemStateHelper.isValidItemState(state)) {
-          int quantity = 0;
+          int  quantity = 0;
 
           if (state is ItemLoadedSuccessState) {
             quantity = state.quantity;
           }
-          if (state is ItemAddQuantityActionState) {
+          if (state is ItemAddQuantityActionState) { //this may not be needed
             quantity = state.quantity;
           }
-          if (state is ItemSubtractQuantityActionState) {
+          if (state is ItemSubtractQuantityActionState) { // this may not be needed
             quantity = state.quantity;
           }
+
           return Scaffold(
             appBar: AppBar(
               systemOverlayStyle: SystemUiOverlayStyle(

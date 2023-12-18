@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bloc_e_commerce/data/cart_items.dart';
 import 'package:bloc_e_commerce/features/home/bloc/home_bloc.dart';
 import 'package:bloc_e_commerce/features/home/ui/banner_widget.dart';
 import 'package:bloc_e_commerce/features/home/ui/popular_foods_widget.dart';
@@ -67,6 +68,8 @@ class _HomePageState extends State<HomePage> {
       //build when no action
       listener: (context, state) {
         if (state is HomeNavigateToCartPageActionState) {
+
+          CartItems.instance.getTotalPriceOfCart();
           //checks the data type of the obj
           Navigator.push(
               context,
@@ -93,7 +96,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
               context,
               PageTransition(
-                  duration: Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 400),
                   type: PageTransitionType.bottomToTop,
                   childCurrent: HomePage(),
                   child: state.item));
